@@ -7,3 +7,82 @@ const map = new mapboxgl.Map({
   style: "mapbox://styles/jw2006/cmq8gk55h00a201rffc6pfpmm", // Your Style URL goes here
   zoom: 13 // starting zoom, again you can choose the level you'd like.
 });
+
+map.on("load", function () {
+  map.addSource("points-data", {
+    type: "geojson",
+    data:
+      "https://raw.githubusercontent.com/cfwang-cmyk/ROP/refs/heads/main/data/Points_in_Auburn.geojson"
+  });
+  map.addLayer({
+    id: "points-layer",
+    type: "circle",
+    source: "points-data",
+    paint: {
+      "circle-color": "#4264FB",
+      "circle-radius": 7,
+      "circle-stroke-width": 2,
+      "circle-stroke-color": "#ffffff"
+    }
+  });
+  // Add click event for popups
+map.on('click', 'points-layer', (e) => {
+    // Copy coordinates array
+    const coordinates = e.features[0].geometry.coordinates.slice();
+    const properties = e.features[0].properties;
+
+    // Ensure the popup appears over the correct point if the map is zoomed out
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    // Create popup content using the actual Auburn GeoJSON properties
+    const popupContent = `
+        <div class="auburn-popup">
+            ${properties.image_link ? `<img src="${properties.image_link}" alt="${properties.feature_name}" style="width: 100%; border-radius: 6px; margin-bottom: 10px;">` : ''}
+            
+            <h3 style="margin: 0 0 8px 0; color: #2b4d70; font-family: 'Raleway', sans-serif;">
+                ${properties.rop_renaming_new_name || properties.feature_name}
+            </h3>
+            
+            <p style="margin: 4px 0; font-size: 14px;">
+                <strong>Feature Type:</strong> ${properties.feature_class}
+            </p>
+            
+            <p style="margin: 4px 0; font-size: 14px;">
+                <strong>Meaning:</strong> ${properties.rop_renaming_meaning}
+            </p>
+            
+            <p style="margin: 4px 0; font-size: 14px;">
+                <strong>Tribal Partner:</strong> ${properties.rop_renaming_tribal_partner}
+            </p>
+            
+            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #eee;">
+            
+            <p style="margin: 0; font-size: 12px; color: #777; font-style: italic;">
+                Formerly: ${properties.rop_renaming_former_name}
+            </p>
+        </div>
+    `;
+
+    new mapboxgl.Popup({ offset: 10 }) // Adding a slight offset so the popup doesn't cover the point
+        .setLngLat(coordinates)
+        .setHTML(popupContent)
+        .addTo(map);
+});
+
+// UX Bonus: Change the cursor to a pointer when hovering over the points
+map.on('mouseenter', 'points-layer', () => {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to the default grab cursor when it leaves
+map.on('mouseleave', 'points-layer', () => {
+    map.getCanvas().style.cursor = '';
+});
+  
+
+ 
+
+});
+

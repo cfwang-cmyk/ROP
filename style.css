@@ -9,3 +9,44 @@ body {
   bottom: 0;
   width: 100%;
 }
+
+h1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    
+    /* 1. Enhanced Frosted Glass with an Icy Gradient */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 248, 255, 0.4));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* 2. Glassmorphism Borders */
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(28, 55, 90, 0.15);
+    
+    /* 3. Crisp Winter Typography */
+    padding: 20px 25px;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #2b4d70; /* Glacier blue */
+    text-transform: uppercase; /* Gives it a majestic, park-signage feel */
+    letter-spacing: 2.5px; /* Wide spacing creates a "breath of cold air" effect */
+}
+
+/* 4. The Decorative Ice-Blue Accent Line */
+h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #89cff0; /* Bright baby/ice blue */
+    margin-top: 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px rgba(137, 207, 240, 0.5); /* Slight glow */
+}
