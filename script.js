@@ -86,3 +86,46 @@ map.on('mouseleave', 'points-layer', () => {
 
 });
 
+// 获取并显示天气信息的函数
+async function fetchAuburnWeather() {
+    try {
+        // 使用 Open-Meteo API (无需 API Key)
+        const lat = 38.95;
+        const lng = -120.97;
+        const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code&temperature_unit=fahrenheit`);
+        const data = await response.json();
+        
+        const tempF = Math.round(data.current.temperature_2m);
+        const code = data.current.weather_code;
+        
+        // 根据 WMO 天气代码匹配对应的 Emoji 和描述
+        let icon = "🌤️";
+        let desc = "Clear";
+        
+        if (code === 0) { icon = "☀️"; desc = "Clear"; }
+        else if (code >= 1 && code <= 3) { icon = "⛅"; desc = "Cloudy"; }
+        else if (code >= 45 && code <= 48) { icon = "🌫️"; desc = "Foggy"; }
+        else if (code >= 51 && code <= 67) { icon = "🌧️"; desc = "Rain"; }
+        else if (code >= 71 && code <= 77) { icon = "❄️"; desc = "Snow"; }
+        else if (code >= 95) { icon = "⛈️"; desc = "Storm"; }
+
+        // 更新 HTML 内容
+        document.getElementById('weather-widget').innerHTML = `
+            <div class="weather-header">Current Weather At Auburn</div>
+            <div class="weather-body">
+                <div style="font-size: 32px; line-height: 1;">${icon}</div>
+                <div>
+                    <div class="weather-temp">${tempF}°F</div>
+                    <div class="weather-desc">${desc}</div>
+                </div>
+            </div>
+        `;
+
+    } catch (error) {
+        console.error("Error fetching weather data:", error);
+        document.getElementById('weather-widget').innerHTML = `<span style="font-size: 12px;">Weather unavailable</span>`;
+    }
+}
+
+// 页面加载时执行该函数
+fetchAuburnWeather();
