@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ROP</title>
+  <title>Auburn SRA Renaming Project</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-  <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.24.0/mapbox-gl.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   
@@ -18,7 +18,20 @@
   
   <div id="map"></div>
 
+  <button id="open-sidebar-btn" class="sidebar-toggle-btn" style="display: none;">☰ SHOW PLACES</button>
+
+  <div id="sidebar" class="sidebar-panel">
+    <div class="sidebar-header">
+      <span>LOCATIONS</span>
+      <button id="close-sidebar-btn" class="close-btn">✕</button>
+    </div>
+    <div id="location-list" class="location-list-container">
+      <div style="padding: 20px; opacity: 0.6; font-size: 13px;">Loading places... </div>
+    </div>
+  </div>
+
   <script src="https://api.mapbox.com/mapbox-gl-js/v3.24.0/mapbox-gl.js"></script>
   <script src="./script.js"></script>
+
 </body>
 </html>

@@ -1,8 +1,12 @@
+/* =========================================
+   1. 全局与基础设置
+   ========================================= */
 body {
   margin: 0;
   padding: 0;
 }
 
+/* 确保地图容器填满整个浏览器窗口 */
 #map {
   position: absolute;
   top: 0;
@@ -10,53 +14,62 @@ body {
   width: 100%;
 }
 
+/* =========================================
+   2. 主标题 (H1) 样式
+   ========================================= */
 h1 {
+    /* 固定在页面左上角 */
     position: absolute;
     top: 20px;
     left: 20px;
-    z-index: 1000;
+    z-index: 1000; /* 确保悬浮在地图上方 */
     
-    /* 1. Enhanced Frosted Glass with an Icy Gradient */
+    /* 冰雪毛玻璃效果：半透明白+冰蓝渐变底色，搭配背景模糊 */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 248, 255, 0.4));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     
-    /* 2. Glassmorphism Borders */
+    /* 边框与阴影，增加玻璃质感 */
     border: 1px solid rgba(255, 255, 255, 0.9);
     border-right: 1px solid rgba(255, 255, 255, 0.4);
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(28, 55, 90, 0.15);
     
-    /* 3. Crisp Winter Typography */
+    /* 冬季感文字排版 */
     padding: 20px 25px;
     margin: 0;
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
     font-size: 22px;
-    color: #2b4d70; /* Glacier blue */
-    text-transform: uppercase; /* Gives it a majestic, park-signage feel */
-    letter-spacing: 2.5px; /* Wide spacing creates a "breath of cold air" effect */
+    color: #2b4d70; /* 冰川深蓝色 */
+    text-transform: uppercase; /* 全部大写，模仿国家公园路牌风格 */
+    letter-spacing: 2.5px; /* 宽字距带来呼吸感 */
 }
 
-/* 4. The Decorative Ice-Blue Accent Line */
+/* 主标题底部的装饰性发光蓝线 */
 h1::after {
     content: '';
     display: block;
     width: 80px;
     height: 3px;
-    background: #89cff0; /* Bright baby/ice blue */
+    background: #89cff0; /* 亮冰蓝色 */
     margin-top: 10px;
     border-radius: 2px;
-    box-shadow: 0 1px 4px rgba(137, 207, 240, 0.5); /* Slight glow */
+    box-shadow: 0 1px 4px rgba(137, 207, 240, 0.5); /* 轻微发光效果 */
 }
+
+/* =========================================
+   3. 实时天气部件样式
+   ========================================= */
 #weather-widget {
+    /* 固定在页面右上角 */
     position: absolute;
     top: 20px;
     right: 20px;
     z-index: 1000;
     
-    /* 冰雪毛玻璃效果 */
+    /* 采用与标题一致的毛玻璃效果 */
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 248, 255, 0.4));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -68,40 +81,179 @@ h1::after {
     font-family: 'Raleway', sans-serif;
     color: #2b4d70;
     
-    /* 改为纵向排列，让标题在上，天气在下 */
+    /* 纵向 Flex 布局：上面是标题，下面是天气数据 */
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* 新增：天气标题的样式 */
+/* 天气部件的标题 ("Current Weather...") */
 .weather-header {
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    border-bottom: 1px solid rgba(43, 77, 112, 0.2); /* 一条淡淡的深蓝色分割线 */
+    border-bottom: 1px solid rgba(43, 77, 112, 0.2); /* 底部细线分割 */
     padding-bottom: 6px;
     margin-bottom: 2px;
 }
 
-/* 新增：天气数据部分的排版 */
+/* 天气部件主体（图标 + 温度）横向排列 */
 .weather-body {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
+/* 温度数字样式 */
 .weather-temp {
     font-size: 22px;
     font-weight: 700;
     line-height: 1;
 }
 
+/* 天气描述词（如 Clear, Snow） */
 .weather-desc {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     opacity: 0.8;
     margin-top: 4px;
+}
+
+/* =========================================
+   4. 悬浮侧边栏样式
+   ========================================= */
+/* 侧边栏主面板 */
+.sidebar-panel {
+    position: absolute;
+    top: 110px; /* 避开左上角的主标题 */
+    left: 20px;
+    bottom: 40px; /* 距离底部留点缝隙 */
+    width: 320px;
+    z-index: 1000;
+    
+    /* 毛玻璃效果 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 248, 255, 0.5));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(28, 55, 90, 0.15);
+    
+    display: flex;
+    flex-direction: column;
+    font-family: 'Raleway', sans-serif;
+    color: #2b4d70;
+    
+    /* 添加平滑的平移和透明度动画，用于折叠效果 */
+    transition: transform 0.3s ease, opacity 0.3s ease; 
+}
+
+/* 当侧边栏被折叠(隐藏)时应用的类名 */
+.sidebar-panel.collapsed {
+    transform: translateX(-360px); /* 往左移出屏幕外 */
+    opacity: 0;
+    pointer-events: none; /* 防止隐身状态下被点击 */
+}
+
+/* 侧边栏顶部标题区 */
+.sidebar-header {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(43, 77, 112, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 关闭面板 (✕) 按钮样式 */
+.close-btn { 
+    background: none;
+    border: none;
+    color: #2b4d70;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 16px; 
+    opacity: 0.6; 
+}
+.close-btn:hover { opacity: 1; }
+
+/* 展开面板 (☰) 按钮样式 */
+.sidebar-toggle-btn {
+    position: absolute;
+    top: 110px;
+    left: 20px;
+    z-index: 1000;
+    padding: 10px 15px;
+    
+    /* 小毛玻璃按钮 */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.7));
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(28, 55, 90, 0.1);
+    
+    color: #2b4d70;
+    cursor: pointer;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* =========================================
+   5. 侧边栏列表项目样式
+   ========================================= */
+/* 包裹所有地名的滚动容器 */
+.location-list-container {
+    flex: 1; /* 撑满剩余高度 */
+    overflow-y: auto; /* 内容过多时自动显示垂直滚动条 */
+    padding: 10px 0;
+}
+
+/* 每一个地名项目的盒子 */
+.sidebar-item {
+    padding: 14px 20px;
+    cursor: pointer; /* 鼠标悬浮变成手型 */
+    transition: background 0.2s ease;
+    border-bottom: 1px solid rgba(43, 77, 112, 0.08); /* 极细的分界线 */
+}
+
+/* 鼠标悬停时的微光效果 */
+.sidebar-item:hover {
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* 地名（新名字）的文本样式 */
+.item-new-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2b4d70;
+    margin-bottom: 3px;
+}
+
+/* 旧名字（曾用名）的文本样式：更小、偏灰、斜体 */
+.item-former-name {
+    font-size: 11px;
+    color: #2b4d70;
+    opacity: 0.6;
+    font-style: italic;
+}
+
+/* =========================================
+   6. 滚动条美化 (Webkit 浏览器专属)
+   ========================================= */
+.location-list-container::-webkit-scrollbar { 
+    width: 6px; /* 细滚动条 */
+}
+.location-list-container::-webkit-scrollbar-track { 
+    background: transparent; /* 轨道透明 */
+}
+.location-list-container::-webkit-scrollbar-thumb { 
+    background: rgba(43, 77, 112, 0.2); /* 浅蓝色滚动滑块 */
+    border-radius: 3px; 
 }
