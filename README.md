@@ -95,7 +95,7 @@ The map is centered on Auburn, CA (lat 38.95, lng -120.97) at zoom level 13.
 - Project for **GEOG N183 – Cartographic Representation** at UC Berkeley.
 - Mapbox style ID: `cmq8gk55h00a201rffc6pfpmm` (owner: `jw2006`).
 - Weather data: Open‑Meteo under the Creative Commons BY 4.0 license.
-- Indigenous renaming research and field work by the ROP team.
+- Indigenous renaming research and field work by the California State Parks‘ Reexamining Our Past Initiative team.
 
 ---
 
